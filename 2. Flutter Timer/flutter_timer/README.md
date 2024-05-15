@@ -62,6 +62,29 @@ Let's break down the `(x) => ticks - x - 1` statement and the `.take()` method:
 
 So, the `(x) => ticks - x - 1` function calculates the value of each tick emitted by the stream, and `.take(ticks)` ensures that the stream emits only `ticks` number of values before completing. This combination effectively creates a countdown timer that emits the remaining seconds every second until the timer completes.
 
+### take()
+let's simplify it with a practical example using numbers.
+
+Imagine you have a stream of numbers representing seconds, starting from 0 and incrementing every second indefinitely. 
+
+Without using the `take` method:
+```dart
+final stream = Stream<int>.periodic(const Duration(seconds: 1), (i) => i);
+stream.forEach(print); // Outputs events: 0, 1, 2, 3, ...
+```
+
+This stream will keep emitting numbers endlessly, starting from 0 and increasing by 1 every second.
+
+Now, let's use the `take` method to limit the stream to emit only the first 5 numbers:
+```dart
+final stream = Stream<int>.periodic(const Duration(seconds: 1), (i) => i).take(5);
+stream.forEach(print); // Outputs events: 0, 1, 2, 3, 4
+```
+
+With the `take(5)` method, the stream will emit only the first 5 numbers (0, 1, 2, 3, and 4) and then it will automatically stop. After emitting these 5 numbers, the stream completes and stops emitting any further events.
+
+So, in simple terms, the `take` method allows you to control how many events you want to receive from a stream. It limits the stream to emit only a certain number of events, making it useful for scenarios where you only need a specific amount of data from the stream.
+
 ## EQUITABLE 
 
 ### [WTP? . . . (i && ii)]
@@ -126,3 +149,45 @@ final class TimerInitial extends TimerState {
 Here, `super.duration` is accessing the `duration` property of the superclass `TimerState`. It's used to reference the `duration` property defined in the superclass from within the `TimerInitial` subclass.
 
 In contrast, in the `TimerRunComplete` class, `super(0)` is calling the constructor of the superclass `TimerState` with `0` as an argument. This is used to initialize the `duration` property of the superclass when creating an instance of `TimerRunComplete`.
+
+# General Development guidance
+
+## Backend/Storage
+
+The Fetching data from backend or local storage db such as sqllite or json file. 
+
+### Step 1
+
+Create and estabilish data sources in this example's case it's the `ticker.dart`
+
+## BLoC
+
+Establishing Business logics for the app in the front-end to process and using the fetched data from the backend/storage/db. 
+
+### Step 2 
+
+Create and define app states. 
+
+### Step 3
+
+Create and define events to which would be used to manipulate the states,
+
+### Step 4
+
+Create the Bloc and the handlers functions to keep the code clean and mantainable and use the those function to stich event handlers and state classes to mantain application states based on the events from the APP's ui. 
+
+## UI
+
+### Step 5
+
+Make the main just so that it executes the material app or whateever it is from the app.dart. 
+
+### Step 6
+
+Establish the `feature_name_page.dart` and `feature_name_view.dart` file convention of the project structure. where `feature_name_page.dart` in our case in this example `timer_page.dart` which is acting as both `timer_page.dart` and `timer_view.dart`. 
+
+If we take a look The `TimerPage` class is providing the `bloc` using `BlocProvider` to its child `TimerView()`. So all the related business logic under this widget tree of the `TimerPage` will have access to the `busines logics`. 
+
+### Step XX or Step 7
+
+Integreting the barrel files. which acts as the exporter of the files for the cleaning up our imports from the timer sections. 

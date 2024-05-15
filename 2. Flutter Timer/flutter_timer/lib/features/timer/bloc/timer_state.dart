@@ -22,18 +22,16 @@ sealed class TimerState extends Equatable {
 
   final int duration;
 
-  @override
-
   /// WTP? . . . (i)
+  @override
   List<Object> get props => [duration];
 }
 
 final class TimerInitial extends TimerState {
   const TimerInitial(super.duration);
 
-  @override
-
   /// WTP? . . . (ii)
+  @override
   String toString() => 'TimerInitial {duration: $duration}';
 }
 
